@@ -1,0 +1,88 @@
+#include <FastLED.h>
+
+// How many leds in your strip?
+#define NUM_LEDS 60
+
+// For led chips like Neopixels, which have a data line, ground, and power, you just
+// need to define DATA_PIN.  For led chipsets that are SPI based (four wires - data, clock,
+// ground, and power), like the LPD8806 define both DATA_PIN and CLOCK_PIN
+#define DATA_PIN 5
+#define CLOCK_PIN 13
+
+int inPin = 7; 
+int icpt = 1; 
+int val = 0;  
+
+// Define the array of leds
+CRGB leds[NUM_LEDS];
+
+void setup() { 
+    FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
+    Serial.begin(9600);  
+    pinMode(inPin, INPUT);  
+ }
+
+ void blinkLed () 
+{
+      for (int i=0; i <= 2; i++){
+        for(int dot = 0; dot < NUM_LEDS; dot++) { 
+            leds[dot] = CRGB::Black;
+            
+        }
+        FastLED.show();
+        delay(1000);
+        for(int dot = 0; dot < NUM_LEDS; dot++) { 
+            leds[dot] = CRGB::White;
+          
+        }
+         FastLED.show();
+          delay(1000);
+      }
+ }
+
+void switchOff () 
+{
+      for(int dot = 0; dot < NUM_LEDS; dot++) { 
+          leds[dot] = CRGB::Black;
+           
+       }
+       FastLED.show();
+      
+}
+
+
+void loop() {
+   val = digitalRead(inPin); 
+ 
+   
+  
+    if (val == HIGH) {
+        Serial.println("do thing"); 
+   
+        if (icpt == 1) { 
+            switchOff();
+            Serial.println("start LED sequence");
+          for(int dot = 0; dot < NUM_LEDS; dot++) { 
+            leds[dot] = CRGB::White;
+            FastLED.show();
+            // clear this led for the next time around the loop
+            //leds[dot] = CRGB::Black;
+            delay(100);
+          }
+            blinkLed();
+        }else {
+          switchOff();
+        }
+        icpt++;
+         Serial.println(icpt);
+       
+      
+    }else {
+     Serial.println("do nothing"); 
+     icpt = 0; 
+     switchOff();
+    }
+    delay(50);
+}
+
+
