@@ -1,7 +1,7 @@
 #include <FastLED.h>
 
 // How many leds in your strip?
-#define NUM_LEDS 60
+#define NUM_LEDS 31
 
 // For led chips like Neopixels, which have a data line, ground, and power, you just
 // need to define DATA_PIN.  For led chipsets that are SPI based (four wires - data, clock,
@@ -71,6 +71,7 @@ void loop() {
             switchOff();
             Serial.println("start LED sequence");
           for(int dot = 0; dot < NUM_LEDS; dot++) { 
+            Serial.println("start LED sequence 1");
             if (dot % 2) {
               leds[dot] = CRGB::Red;
             }else {
@@ -79,10 +80,52 @@ void loop() {
             FastLED.show();
             // clear this led for the next time around the loop
             //leds[dot] = CRGB::Black;
-            delay(delaySeq);
-            delaySeq = delaySeq - 1,2;
+            delay(50);
+           
           }
-            blinkLed();
+           switchOff();
+           for(int dot = 0; dot < NUM_LEDS; dot++) { 
+            Serial.println("start LED sequence 2");
+            if (dot % 2) {
+              leds[dot] = CRGB::Red;
+            }else {
+              leds[dot] = CRGB::Yellow;
+            }
+            FastLED.show();
+            // clear this led for the next time around the loop
+            //leds[dot] = CRGB::Black;
+            delay(35);
+           
+          }
+           switchOff();
+           for(int dot = 0; dot < NUM_LEDS; dot++) { 
+            Serial.println("start LED sequence 3");
+            if (dot % 2) {
+              leds[dot] = CRGB::Red;
+            }else {
+              leds[dot] = CRGB::Yellow;
+            }
+            FastLED.show();
+            // clear this led for the next time around the loop
+            //leds[dot] = CRGB::Black;
+            delay(25);
+           
+          }
+           switchOff();
+           for(int dot = 0; dot < NUM_LEDS; dot++) { 
+              Serial.println("start LED sequence 4");
+            if (dot % 2) {
+              leds[dot] = CRGB::Red;
+            }else {
+              leds[dot] = CRGB::Yellow;
+            }
+            FastLED.show();
+            // clear this led for the next time around the loop
+            //leds[dot] = CRGB::Black;
+            delay(10);
+           
+          }
+            //blinkLed();
         }else {
           switchOff();
         }
@@ -97,5 +140,4 @@ void loop() {
     }
     delay(50);
 }
-
 
