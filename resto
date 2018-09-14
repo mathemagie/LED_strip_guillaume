@@ -17,7 +17,8 @@ int val = 0;
 CRGB leds[NUM_LEDS];
 
 void setup() { 
-    FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
+   // FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
+    FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
     Serial.begin(9600);  
     pinMode(inPin, INPUT);  
  }
@@ -25,14 +26,14 @@ void setup() {
  void blinkLed () 
 {
       for (int i=0; i <= 2; i++){
-        for(int dot = 0; dot < NUM_LEDS; dot++) { 
+       for(int dot = NUM_LEDS - 5 ; dot >= 0; dot--) { 
             leds[dot] = CRGB::Black;
             
         }
         FastLED.show();
         delay(1000);
-        for(int dot = 0; dot < NUM_LEDS; dot++) { 
-            leds[dot] = CRGB::White;
+       for(int dot = NUM_LEDS - 5 ; dot >= 0; dot--) { 
+            leds[dot] = CRGB::Red;
           
         }
          FastLED.show();
@@ -62,8 +63,8 @@ void loop() {
         if (icpt == 1) { 
             switchOff();
             Serial.println("start LED sequence");
-          for(int dot = 0; dot < NUM_LEDS; dot++) { 
-            leds[dot] = CRGB::White;
+          for(int dot = NUM_LEDS - 5 ; dot >= 0; dot--) { 
+            leds[dot] = CRGB::Red;
             FastLED.show();
             // clear this led for the next time around the loop
             //leds[dot] = CRGB::Black;
@@ -84,5 +85,3 @@ void loop() {
     }
     delay(50);
 }
-
-
