@@ -1,0 +1,64 @@
+#include <FastLED.h>
+#define NUM_LEDS 60
+#define DATA_PIN 5
+#define CLOCK_PIN 13
+
+int inPin = 7; 
+int icpt = 1; 
+int val;
+int startLED = 0;
+
+
+// Define the array of leds
+CRGB leds[NUM_LEDS];
+
+void setup() { 
+    Serial.begin(9600);  
+    pinMode(inPin, INPUT);  
+    FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
+ }
+
+ void switchOff () 
+{
+      for(int dot = 0; dot < NUM_LEDS; dot++) { 
+          leds[dot] = CRGB::Black;
+        }
+       FastLED.show();
+}
+
+
+void loop() {
+   val = digitalRead(inPin); 
+   if (val == HIGH) {
+       Serial.println("do thing"); 
+       if (icpt == 1) { 
+            switchOff();
+            Serial.println("start LED sequence" + startLED);
+           
+          for(int dot = startLED ; dot < NUM_LEDS -3 ; dot++) { 
+            if (startLED >= 1) {
+               leds[0] = CRGB::Black;
+              leds[startLED] = CRGB::Black;
+            }else {
+                 leds[startLED] = CRGB::Green;
+            }
+            leds[startLED+1] = CRGB::Green;
+            leds[startLED+2] = CRGB::Green;
+            
+            FastLED.show();
+            delay(50);
+            startLED = startLED + 1;
+          }
+        }else {
+          switchOff();
+        }
+        icpt++;
+        
+     }else {
+      Serial.println("do nothing"); 
+      icpt = 1; 
+      startLED = 0;
+      switchOff();
+    }
+    delay(50);
+}
