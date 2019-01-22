@@ -35,7 +35,7 @@ void loop() {
             switchOff();
             Serial.println("start LED sequence" + startLED);
            
-          for(int dot = startLED ; dot < NUM_LEDS -3 ; dot++) { 
+          for(int dot = startLED ; dot < NUM_LEDS -5 ; dot++) { 
             if (startLED >= 1) {
                leds[0] = CRGB::Black;
               leds[startLED] = CRGB::Black;
@@ -44,9 +44,12 @@ void loop() {
             }
             leds[startLED+1] = CRGB::Green;
             leds[startLED+2] = CRGB::Green;
+            leds[startLED+3] = CRGB::Green;
+            leds[startLED+4] = CRGB::Green;
+            leds[startLED+5] = CRGB::Green;
             
             FastLED.show();
-            delay(50);
+            delay(90);
             startLED = startLED + 1;
           }
         }else {
